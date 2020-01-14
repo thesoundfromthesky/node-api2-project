@@ -42,7 +42,7 @@ router.get("/:id", (req, res) => {
   posts
     .findById(id)
     .then(post => {
-      if (post) {
+      if (post && post.length) {
         res.status(200).json(post);
       } else {
         res
@@ -74,7 +74,7 @@ router.get("/:id/comments", (req, res) => {
   posts
     .findPostComments(id)
     .then(comments => {
-      if (comments) {
+      if (comments && comments.length) {
         res.status(200).json(comments);
       } else {
         res
@@ -158,7 +158,7 @@ router.post("/:id/comments", (req, res) => {
     posts
       .findById(id)
       .then(post => {
-        if (post) {
+        if (post && post.length) {
           posts
             .insertComment(req.body)
             .then(id => {
@@ -215,8 +215,8 @@ router.put("/:id", (req, res) => {
     posts
       .findById(id)
       .then(post => {
-        if (post) {
-          posts.update(id, req.body).then(id => {
+        if (post && post.length) {
+          posts.update(id, req.body).then(() => {
             posts.findById(id).then(post => res.status(200).json(post));
           });
         } else {
@@ -254,7 +254,7 @@ router.delete("/:id", (req, res) => {
   posts
     .findById(id)
     .then(post => {
-      if (post) {
+      if (post && post.length) {
         posts.remove(id).then(id => res.sendStatus(204));
       } else {
         res
