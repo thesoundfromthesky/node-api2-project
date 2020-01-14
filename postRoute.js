@@ -113,7 +113,9 @@ router.post("/", (req, res) => {
     posts
       .insert(req.body)
       .then(id => {
-        posts.findById(id.id).then(post => res.status(201).json(post));
+        posts.findById(id.id).then(post => {
+          res.status(201).json(post);
+        });
       })
       .catch(err => {
         res.status(500).json({
